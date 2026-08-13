@@ -1,0 +1,10 @@
+{
+  "name": "Vineet Yadav — 69 Labs Studio",
+  "short_name": "69 Labs",
+  "description": "Vineet Yadav's personal project and achievement archive.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#070707",
+  "icons": []
+}
