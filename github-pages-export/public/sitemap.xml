@@ -1,7 +1,21 @@
-# Security
-
-This repository contains a static public website. Do not commit passwords,
-API keys, private tokens, personal documents, or other secrets.
-
-Keep two-factor authentication enabled on the GitHub account and review
-Dependabot update pull requests before merging them.
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://69labstudio.online/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://69labstudio.online/privacy.html</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://69labstudio.online/security.html</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+</urlset>

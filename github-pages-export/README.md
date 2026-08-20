@@ -1,15 +1,18 @@
 # Vineet Yadav — 69 Labs Studio
 
-Static React/Vite source for Vineet's personal project, achievement, and update archive.
+Static React/Vite source for Vineet Yadav's personal portfolio, education, project archive, and public profiles.
 
-## Publish on GitHub Pages
+## Existing GitHub repository structure
 
-1. Create a **public** GitHub repository named exactly `69-labs-studio`.
-2. Upload everything inside this folder to the repository. Do not upload the enclosing ZIP or parent folder.
-3. Open the repository's **Settings → Pages**.
-4. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-5. Open the **Actions** tab and wait for “Deploy 69 Labs Studio to GitHub Pages” to finish.
-6. Visit `https://demonspeaking.github.io/69-labs-studio/`.
+The repository is intentionally arranged as:
+
+```text
+69-labs-studio/
+├── .github/workflows/main.yml
+└── github-pages-export/
+```
+
+The workflow installs and builds the site from `github-pages-export`, then deploys the generated `dist` directory to GitHub Pages.
 
 ## Update later
 
@@ -32,8 +35,18 @@ npm run build
 
 ## Search setup after publishing
 
-Add `https://demonspeaking.github.io/69-labs-studio/` to Google Search Console, submit `sitemap.xml`, and request indexing for the homepage.
+1. Confirm `https://69labstudio.online/` opens successfully.
+2. Add a **Domain property** for `69labstudio.online` in Google Search Console.
+3. Copy Google's TXT verification record into the domain's DNS settings.
+4. Submit `https://69labstudio.online/sitemap.xml` in Search Console.
+5. Inspect `https://69labstudio.online/` and request indexing.
 
-If the GitHub username, repository name, or domain changes, update the canonical URL and structured data in `index.html`, plus the URLs in `public/robots.txt` and `public/sitemap.xml`.
+## Connect the custom domain
+
+The build includes `public/CNAME` for `69labstudio.online`. In the GitHub repository, open **Settings → Pages**, enter `69labstudio.online` under **Custom domain**, save it, and enable **Enforce HTTPS** after the certificate is ready.
+
+At the DNS provider, remove conflicting records and add the GitHub Pages records shown in GitHub's current custom-domain instructions. Verify the domain in the GitHub account before connecting it to reduce takeover risk.
+
+If the domain changes, update the canonical and structured-data URLs in `index.html`, plus `public/CNAME`, `public/robots.txt`, `public/sitemap.xml`, and `public/.well-known/security.txt`.
 
 Copyright © 2026 Vineet Yadav. All rights reserved.

@@ -3,26 +3,30 @@ import {
   ArrowUpRight,
   BookOpen,
   Braces,
-  Check,
+  ChevronLeft,
   ChevronRight,
-  Clapperboard,
-  Clock3,
   Code2,
+  Dumbbell,
   Film,
+  Fingerprint,
   Gauge,
+  Github,
+  GraduationCap,
   Instagram,
   Layers3,
+  Linkedin,
   LockKeyhole,
   Menu,
   MonitorSmartphone,
   Newspaper,
+  ShieldCheck,
   Sparkles,
   UtensilsCrossed,
-  WandSparkles,
+  Wrench,
   X,
-  Zap,
+  Youtube,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Project = {
   id: string;
@@ -36,7 +40,38 @@ type Project = {
   visual: string;
 };
 
+type ProfileLink = {
+  label: string;
+  handle: string;
+  href: string;
+  icon: typeof Github;
+};
+
 const projects: Project[] = [
+  {
+    id: "idverse",
+    title: "IDverse",
+    description:
+      "A customizable identity-card template platform with fictional and creative ID designs, browser-based personalization, and print-ready downloads.",
+    tech: ["React", "Supabase", "Razorpay", "Netlify"],
+    liveLink: "https://idverse-69labs.netlify.app/",
+    type: "Creative Identity Platform",
+    status: "live",
+    icon: Fingerprint,
+    visual: "idverse",
+  },
+  {
+    id: "vorn-news",
+    title: "VORN News — Voice of Republic Nation",
+    description:
+      "An independent digital news platform covering current affairs and important developments from India and around the world.",
+    tech: ["React", "Vite", "Supabase", "Automated Publishing"],
+    liveLink: "https://vorn.website/",
+    type: "Independent News Platform",
+    status: "live",
+    icon: Newspaper,
+    visual: "vorn",
+  },
   {
     id: "ecom-store",
     title: "69 LABS E-Commerce Storefront",
@@ -74,22 +109,10 @@ const projects: Project[] = [
     visual: "menu",
   },
   {
-    id: "vorn-news",
-    title: "VORN News — Voice of Republic Nation",
-    description:
-      "An independent digital news platform for current news and important developments from India and around the world, with dedicated article pages and a searchable news archive.",
-    tech: ["React", "Vite", "Supabase", "News Publishing"],
-    liveLink: "https://vorn.website/",
-    type: "Independent News Platform",
-    status: "live",
-    icon: Newspaper,
-    visual: "vorn",
-  },
-  {
     id: "coming-soon",
     title: "The Next Build",
     description:
-      "This space is reserved for the next website, app, experiment, or personal project that makes it past the idea stage.",
+      "Reserved for the next website, app, experiment, or personal project that moves from an idea into a released build.",
     tech: ["Details TBA", "Coming Soon"],
     type: "Future Project",
     status: "coming-soon",
@@ -98,10 +121,57 @@ const projects: Project[] = [
   },
 ];
 
+const portraits = [
+  {
+    src: "./images/vineet-bike.webp",
+    alt: "Vineet Yadav sitting on a motorcycle",
+    label: "Vineet / Main portrait",
+    className: "portrait-bike",
+  },
+  {
+    src: "./images/vineet-fountain.webp",
+    alt: "Vineet Yadav standing in front of a fountain",
+    label: "Vineet / Outdoors",
+    className: "portrait-fountain",
+  },
+  {
+    src: "./images/vineet-formal.webp",
+    alt: "Vineet Yadav wearing a black suit",
+    label: "Vineet / Formal",
+    className: "portrait-formal",
+  },
+  {
+    src: "./images/vineet-casual.webp",
+    alt: "Vineet Yadav wearing a red and black jacket",
+    label: "Vineet / Casual",
+    className: "portrait-casual",
+  },
+];
+
+const profileLinks: ProfileLink[] = [
+  { label: "GitHub", handle: "@Demonspeaking", href: "https://github.com/Demonspeaking", icon: Github },
+  { label: "Instagram", handle: "@gannekazeus", href: "https://www.instagram.com/gannekazeus/", icon: Instagram },
+  { label: "YouTube", handle: "@VineetReviews", href: "https://www.youtube.com/@VineetReviews", icon: Youtube },
+  { label: "LinkedIn", handle: "Vineet Yadav", href: "https://www.linkedin.com/in/vineet-yadav-8b1a3a22a", icon: Linkedin },
+  { label: "X", handle: "@69labstudio", href: "https://x.com/69labstudio", icon: X },
+  { label: "VORN", handle: "Voice of Republic Nation", href: "https://vorn.website/", icon: Newspaper },
+];
+
+const identityTags = [
+  "Vineet Yadav",
+  "69 Labs Studio",
+  "69labstudio · Vineet Yadav",
+  "@gannekazeus",
+  "VORN",
+  "Voice of Republic Nation",
+  "IDverse",
+];
+
 const navItems = [
   ["Projects", "#work"],
   ["About", "#about"],
-  ["Archive", "#archive"],
+  ["Education", "#education"],
+  ["Profiles", "#profiles"],
 ];
 
 function BrandMark() {
@@ -165,6 +235,70 @@ function SectionHeading({
   );
 }
 
+function PortraitCarousel() {
+  const [activePortrait, setActivePortrait] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActivePortrait((current) => (current + 1) % portraits.length);
+    }, 6500);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const showPrevious = () => {
+    setActivePortrait((current) => (current - 1 + portraits.length) % portraits.length);
+  };
+
+  const showNext = () => {
+    setActivePortrait((current) => (current + 1) % portraits.length);
+  };
+
+  return (
+    <aside className="portrait-carousel" aria-label="Photographs of Vineet Yadav">
+      <div className="portrait-ring ring-outer" aria-hidden="true" />
+      <div className="portrait-ring ring-inner" aria-hidden="true" />
+      <div className="portrait-frame" aria-live="polite">
+        {portraits.map((portrait, index) => (
+          <img
+            className={`${portrait.className} ${index === activePortrait ? "portrait-active" : ""}`}
+            src={portrait.src}
+            alt={index === activePortrait ? portrait.alt : ""}
+            width={1600}
+            height={1200}
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : "auto"}
+            key={portrait.src}
+          />
+        ))}
+        <span className="portrait-index">0{activePortrait + 1} / 04</span>
+        <span className="portrait-caption">{portraits[activePortrait].label}</span>
+      </div>
+
+      <button className="portrait-arrow portrait-previous" type="button" onClick={showPrevious} aria-label="Show previous photograph">
+        <ChevronLeft size={20} />
+      </button>
+      <button className="portrait-arrow portrait-next" type="button" onClick={showNext} aria-label="Show next photograph">
+        <ChevronRight size={20} />
+      </button>
+
+      <div className="portrait-dots" aria-label="Choose a photograph">
+        {portraits.map((portrait, index) => (
+          <button
+            className={index === activePortrait ? "active" : ""}
+            type="button"
+            onClick={() => setActivePortrait(index)}
+            aria-label={`Show photograph ${index + 1}: ${portrait.label}`}
+            aria-pressed={index === activePortrait}
+            key={portrait.src}
+          >
+            <img src={portrait.src} alt="" width={72} height={72} loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -181,7 +315,7 @@ export default function Home() {
             ))}
           </nav>
           <span className="availability archive-status">
-            <span /> Vineet&apos;s personal archive
+            <span /> Personal archive · 2026
           </span>
           <button
             className="menu-button"
@@ -208,66 +342,50 @@ export default function Home() {
         <div className="hero-orbit orbit-two" aria-hidden="true" />
         <div className="hero-content">
           <p className="eyebrow hero-eyebrow">
-            <span /> Vineet&apos;s personal archive · India
+            <span /> Vineet Yadav · Raebareli, India
           </p>
           <h1 id="hero-title">
-            I build things.
-            <em> I edit stories.</em>
+            I turn ideas
+            <em> into things.</em>
           </h1>
           <p className="hero-copy">
-            I&apos;m Vineet—a website and app developer who also works with video.
-            This is not a sales page. It is one evolving place for the projects,
-            experiments, achievements, creative work, and updates I want to keep.
+            I&apos;m Vineet—the person behind 69 Labs Studio, VORN, and IDverse.
+            I use AI-assisted development to build websites and apps, and creative
+            tools to edit, design, experiment, and publish what I learn.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#work">
-              Browse my projects <ArrowDownRight size={18} />
+              Explore my work <ArrowDownRight size={18} />
             </a>
             <a className="text-link" href="#about">
-              Read about me <ArrowDownRight size={18} />
+              About me <ArrowDownRight size={18} />
             </a>
           </div>
         </div>
 
-        <aside className="hero-card" aria-label="Vineet's disciplines">
-          <div className="hero-card-top">
-            <span>VINEET / ARCHIVE</span>
-            <Sparkles size={18} />
-          </div>
-          <div className="hero-card-core">
-            <span className="giant-69">69</span>
-            <div className="core-ring ring-one" />
-            <div className="core-ring ring-two" />
-            <div className="core-dot dot-one" />
-            <div className="core-dot dot-two" />
-          </div>
-          <div className="hero-card-bottom">
-            <span><Code2 size={16} /> Development</span>
-            <span><Clapperboard size={16} /> Editing</span>
-          </div>
-        </aside>
+        <PortraitCarousel />
 
         <div className="hero-strip">
           <div>
-            <small>FOCUS / 01</small>
-            <span>Websites & applications</span>
+            <small>BUILD / AI-ASSISTED</small>
+            <span>Websites, applications & product ideas</span>
           </div>
           <div>
-            <small>FOCUS / 02</small>
-            <span>Video editing & motion</span>
+            <small>CREATE / HANDS-ON</small>
+            <span>Video editing, design & visual content</span>
           </div>
           <div>
-            <small>ARCHIVE</small>
-            <span>Work, achievements & updates</span>
+            <small>LEARN / APPLY</small>
+            <span>Fitness, nutrition & mechanical knowledge</span>
           </div>
         </div>
       </section>
 
       <section className="work-section section-shell" id="work">
         <SectionHeading
-          eyebrow="Projects"
-          title="Things I have built and put online."
-          copy="A record of released websites, app experiments, and whatever I build next. Unfinished work is labelled clearly."
+          eyebrow="Selected work"
+          title="Projects I have taken from idea to release."
+          copy="A transparent record of live websites, app experiments, and works in progress. These are AI-assisted builds directed, tested, and shipped by me."
         />
         <div className="projects-list">
           {projects.map((project, index) => (
@@ -288,7 +406,7 @@ export default function Home() {
                 </div>
                 <div className="project-actions">
                   {project.liveLink ? (
-                    <a className="button button-small" href={project.liveLink} target="_blank" rel="noreferrer">
+                    <a className="button button-small" href={project.liveLink} target="_blank" rel="noopener noreferrer">
                       Open project <ArrowUpRight size={16} />
                     </a>
                   ) : (
@@ -296,7 +414,7 @@ export default function Home() {
                       Not released yet <LockKeyhole size={15} />
                     </span>
                   )}
-                  <span className="source-note"><LockKeyhole size={14} /> Source not published</span>
+                  <span className="source-note"><Sparkles size={14} /> AI-assisted workflow</span>
                 </div>
               </div>
             </article>
@@ -306,18 +424,21 @@ export default function Home() {
 
       <section className="about-section section-shell" id="about">
         <div className="about-grid">
-          <SectionHeading eyebrow="About me" title="Hi, I&apos;m Vineet." />
+          <SectionHeading eyebrow="About me" title="Curious, practical, and honest about the process." />
           <div className="about-copy">
-            <span className="placeholder-label">Builder · Editor · Chronic scroller</span>
+            <span className="placeholder-label">Builder · Editor · Lifelong learner</span>
             <p>
-              I work on websites, app ideas, and video edits. I have never worked
-              professionally—everything shown here was made for me, my own ideas,
-              or as a way to learn by actually building something.
+              I&apos;m Vineet Yadav. I build personal websites and application ideas
+              through AI-assisted development—often called vibe coding. I do not
+              claim to be a traditional programmer; my strength is turning an idea
+              into a clear product, directing the tools, solving problems, testing
+              the result, and learning how to ship it safely.
             </p>
             <p>
-              69 LABS STUDIO is the label I use to keep that work together. This
-              page will grow with new projects, achievements, experiments, and
-              updates instead of pretending to be an agency.
+              69 Labs Studio is the umbrella for my projects and experiments. VORN
+              is my independent news platform, while IDverse explores customizable
+              fictional and creative identity-card designs. This site is my living
+              resume: work, education, knowledge, milestones, and future updates.
             </p>
           </div>
         </div>
@@ -325,36 +446,34 @@ export default function Home() {
         <div className="skills-grid skills-grid-four">
           <article>
             <Braces size={22} />
-            <small>01 / BUILD</small>
+            <small>01 / AI-ASSISTED BUILD</small>
             <h3>Websites & apps</h3>
             <div className="skill-cloud">
-              {["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS"].map((skill) => <span key={skill}>{skill}</span>)}
-            </div>
-          </article>
-          <article>
-            <Zap size={22} />
-            <small>02 / SYSTEMS</small>
-            <h3>Tools & technical work</h3>
-            <div className="skill-cloud">
-              {["Git", "GitHub", "REST APIs", "Responsive UI", "Electrical Layouts"].map((skill) => <span key={skill}>{skill}</span>)}
+              {["Vibe coding", "React", "Supabase", "GitHub", "UI design", "Testing & deployment"].map((skill) => <span key={skill}>{skill}</span>)}
             </div>
           </article>
           <article>
             <Film size={22} />
-            <small>03 / EDIT</small>
-            <h3>Video software</h3>
+            <small>02 / CREATIVE TOOLS</small>
+            <h3>Editing & design</h3>
             <div className="skill-cloud">
-              {["CapCut", "VN", "Filmora", "Alight Motion", "Color Grading", "Sound Design"].map((skill) => <span key={skill}>{skill}</span>)}
+              {["CapCut", "VN", "Filmora", "Alight Motion", "Canva"].map((skill) => <span key={skill}>{skill}</span>)}
             </div>
           </article>
           <article>
-            <Clock3 size={22} />
-            <small>04 / QUESTIONABLE</small>
-            <h3>Internet endurance</h3>
+            <Dumbbell size={22} />
+            <small>03 / APPLIED KNOWLEDGE</small>
+            <h3>Fitness & nutrition</h3>
             <div className="skill-cloud">
-              <span>Doom scrolling</span>
-              <span>Up to 20 hours straight</span>
-              <span>Not recommended</span>
+              {["Diet fundamentals", "Workout planning", "Fat loss", "Muscle building", "Body recomposition"].map((skill) => <span key={skill}>{skill}</span>)}
+            </div>
+          </article>
+          <article>
+            <Wrench size={22} />
+            <small>04 / TECHNICAL TRADE</small>
+            <h3>Mechanical foundation</h3>
+            <div className="skill-cloud">
+              {["ITI mechanical trade", "Practical systems", "Tools & maintenance", "Hands-on learning"].map((skill) => <span key={skill}>{skill}</span>)}
             </div>
           </article>
         </div>
@@ -362,76 +481,100 @@ export default function Home() {
         <div className="experience-placeholder experience-honest">
           <span>EXPERIENCE / HONEST VERSION</span>
           <div>
-            <h3>No professional experience yet.</h3>
-            <p>I currently build websites, app experiments, and edits for myself—and learn from shipping them.</p>
+            <h3>Independent work, not professional employment.</h3>
+            <p>I build, edit, learn, and publish my own projects. Every live result is part of that practice.</p>
           </div>
-          <ArrowDownRight size={22} />
+          <ShieldCheck size={22} />
         </div>
       </section>
 
-      <section className="services-section section-shell" id="archive">
+      <section className="education-section section-shell" id="education">
         <SectionHeading
-          eyebrow="What this page tracks"
-          title="A living resume, without the sales pitch."
-          copy="The archive is organised around things made, skills practised, and milestones reached."
+          eyebrow="Education"
+          title="Formal study across society, health, and mechanics."
+          copy="Completed credentials and current study are labelled separately so the record stays accurate."
         />
-        <div className="services-grid archive-grid">
+        <div className="education-timeline">
           <article>
-            <div className="service-icon"><Code2 size={24} /></div>
-            <small>ARCHIVE / 01</small>
-            <h3>Projects</h3>
-            <p>Websites, application experiments, technical builds, and future releases collected in one place.</p>
-            <ul>
-              <li><Check size={15} /> Released work</li>
-              <li><Check size={15} /> Project descriptions</li>
-              <li><Check size={15} /> Technology used</li>
-            </ul>
-            <strong>Four projects live</strong>
-          </article>
-          <article className="featured-service">
-            <div className="service-icon"><WandSparkles size={24} /></div>
-            <small>ARCHIVE / 02</small>
-            <h3>Creative work</h3>
-            <p>Video edits, motion experiments, visual studies, and a future showreel as the work becomes ready.</p>
-            <ul>
-              <li><Check size={15} /> CapCut & VN</li>
-              <li><Check size={15} /> Filmora</li>
-              <li><Check size={15} /> Alight Motion</li>
-            </ul>
-            <strong>Archive in progress</strong>
+            <div className="education-icon"><GraduationCap size={24} /></div>
+            <div className="education-date">2023—2026</div>
+            <div>
+              <span className="credential-status status-complete">Completed</span>
+              <h3>Bachelor of Arts</h3>
+              <p>Sociology and Education Science</p>
+            </div>
           </article>
           <article>
-            <div className="service-icon"><BookOpen size={24} /></div>
-            <small>ARCHIVE / 03</small>
-            <h3>Milestones & updates</h3>
-            <p>A simple record of what I learn, launch, improve, or complete over time.</p>
-            <ul>
-              <li><Check size={15} /> Achievements</li>
-              <li><Check size={15} /> Progress notes</li>
-              <li><Check size={15} /> What comes next</li>
-            </ul>
-            <strong>Always evolving</strong>
+            <div className="education-icon"><BookOpen size={24} /></div>
+            <div className="education-date">CURRENT</div>
+            <div>
+              <span className="credential-status status-current">Pursuing</span>
+              <h3>Diploma in Nutrition & Health Education</h3>
+              <p>Indira Gandhi National Open University (IGNOU)</p>
+            </div>
           </article>
+          <article>
+            <div className="education-icon"><Wrench size={24} /></div>
+            <div className="education-date">2021—2023</div>
+            <div>
+              <span className="credential-status status-complete">Completed</span>
+              <h3>Industrial Training Institute (ITI)</h3>
+              <p>Mechanical trade education and practical technical training</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="profiles-section section-shell" id="profiles">
+        <SectionHeading
+          eyebrow="Identity & profiles"
+          title="One person, several projects and public names."
+          copy="These are the official profiles, project names, and identities connected to Vineet Yadav and 69 Labs Studio."
+        />
+
+        <div className="identity-tags" aria-label="Names associated with Vineet Yadav">
+          {identityTags.map((tag) => <span key={tag}>{tag}</span>)}
+        </div>
+
+        <div className="profile-grid">
+          {profileLinks.map((profile) => {
+            const Icon = profile.icon;
+            return (
+              <a href={profile.href} target="_blank" rel="noopener noreferrer" key={profile.href}>
+                <Icon size={22} />
+                <span>
+                  <small>{profile.label}</small>
+                  <strong>{profile.handle}</strong>
+                </span>
+                <ArrowUpRight size={18} />
+              </a>
+            );
+          })}
         </div>
 
         <div className="update-panel current-update">
           <div>
             <span className="placeholder-label">Current chapter · 2026</span>
-            <blockquote>Building personal products, developing VORN News, and learning web, app, and video workflows by doing the work.</blockquote>
+            <blockquote>Building IDverse, growing VORN, publishing app experiments, and learning how ideas become reliable products.</blockquote>
           </div>
-          <p>More updates will be added here</p>
+          <p>69LABSTUDIO.ONLINE</p>
         </div>
       </section>
 
       <footer className="site-footer section-shell">
         <BrandMark />
-        <p>Projects · Creative work · Achievements · Updates</p>
-        <div className="social-links">
-          <a href="https://x.com/69labstudio" target="_blank" rel="noreferrer" aria-label="69 Labs Studio on X"><X size={18} /></a>
-          <a href="https://instagram.com/gannekazeus" target="_blank" rel="noreferrer" aria-label="Gannekazeus on Instagram"><Instagram size={18} /></a>
-          <a href="https://vorn.website/" target="_blank" rel="noreferrer" aria-label="Visit VORN News"><Newspaper size={18} /></a>
+        <p>Projects · Education · Knowledge · Updates</p>
+        <div className="footer-links">
+          <a href="./privacy.html">Privacy</a>
+          <a href="./security.html">Security</a>
         </div>
-        <small>© {new Date().getFullYear()} VINEET · 69 LABS STUDIO</small>
+        <div className="social-links">
+          <a href="https://github.com/Demonspeaking" target="_blank" rel="noopener noreferrer" aria-label="Vineet Yadav on GitHub"><Github size={18} /></a>
+          <a href="https://www.instagram.com/gannekazeus/" target="_blank" rel="noopener noreferrer" aria-label="Gannekazeus on Instagram"><Instagram size={18} /></a>
+          <a href="https://www.youtube.com/@VineetReviews" target="_blank" rel="noopener noreferrer" aria-label="Vineet Reviews on YouTube"><Youtube size={18} /></a>
+          <a href="https://www.linkedin.com/in/vineet-yadav-8b1a3a22a" target="_blank" rel="noopener noreferrer" aria-label="Vineet Yadav on LinkedIn"><Linkedin size={18} /></a>
+        </div>
+        <small>© {new Date().getFullYear()} VINEET YADAV · 69 LABS STUDIO</small>
       </footer>
     </main>
   );

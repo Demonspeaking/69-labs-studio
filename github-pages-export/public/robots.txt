@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://demonspeaking.github.io/69-labs-studio/sitemap.xml
+Sitemap: https://69labstudio.online/sitemap.xml

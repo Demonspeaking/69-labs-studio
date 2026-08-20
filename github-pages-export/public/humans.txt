@@ -1,0 +1,10 @@
+/* TEAM */
+Name: Vineet Yadav
+Identity: 69 Labs Studio
+Location: Raebareli, Uttar Pradesh, India
+GitHub: https://github.com/Demonspeaking
+
+/* SITE */
+Purpose: Personal portfolio, work archive, education and updates
+Language: English
+Last update: 2026-08-21
